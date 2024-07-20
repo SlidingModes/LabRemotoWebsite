@@ -36,11 +36,13 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@fontsource/jetbrains-mono": "^5.0.20",
+		"@fontsource/manrope": "^5.0.20",
 		"bits-ui": "^0.21.12",
 		"clsx": "^2.1.1",
 		"lucide-svelte": "^0.411.0",
 		"mode-watcher": "^0.4.0",
-		"svelte-radix": "^1.1.0",
+		"open-props": "^1.7.5",
 		"tailwind-merge": "^2.4.0",
 		"tailwind-variants": "^0.2.1",
 		"vaul-svelte": "^0.3.2"

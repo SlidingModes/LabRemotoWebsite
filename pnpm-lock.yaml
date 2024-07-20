@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@fontsource/jetbrains-mono':
+        specifier: ^5.0.20
+        version: 5.0.20
+      '@fontsource/manrope':
+        specifier: ^5.0.20
+        version: 5.0.20
       bits-ui:
         specifier: ^0.21.12
         version: 0.21.12(svelte@5.0.0-next.178)
@@ -20,9 +26,9 @@ importers:
       mode-watcher:
         specifier: ^0.4.0
         version: 0.4.0(svelte@5.0.0-next.178)
-      svelte-radix:
-        specifier: ^1.1.0
-        version: 1.1.0(svelte@5.0.0-next.178)
+      open-props:
+        specifier: ^1.7.5
+        version: 1.7.5
       tailwind-merge:
         specifier: ^2.4.0
         version: 2.4.0
@@ -279,6 +285,12 @@ packages:
 
   '@floating-ui/utils@0.2.4':
     resolution: {integrity: sha512-dWO2pw8hhi+WrXq1YJy2yCuWoL20PddgGaqTgVe4cOS9Q6qklXCiA1tJEqX6BEwRNSCP84/afac9hd4MS+zEUA==}
+
+  '@fontsource/jetbrains-mono@5.0.20':
+    resolution: {integrity: sha512-QkrihYWqftzs+04TinulIhnFqNwO6990HR07iCUae/6daOZAMy7urUPzytrRT9M8KLTTHBeHOY0CKqOs1+o2OQ==}
+
+  '@fontsource/manrope@5.0.20':
+    resolution: {integrity: sha512-FW1t+WAvJroALa7zgd5S2dn3zy/sxxHhry/OwDGKmO7Be/zlLBIVaWW+cjyfyA6a6zWEx5YQ4OFfYlA6An5osQ==}
 
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
@@ -1128,6 +1140,9 @@ packages:
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
 
+  open-props@1.7.5:
+    resolution: {integrity: sha512-DajjLQDJgIa0i+QdB2q5M8lNLo2ICk+DbDh4TsqNsT1tAO8Zm8F7dndSkLMQkobT98lbvDMMpJWO8NT0ibjrjA==}
+
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
@@ -1449,11 +1464,6 @@ packages:
       typescript:
         optional: true
 
-  svelte-radix@1.1.0:
-    resolution: {integrity: sha512-kyE9wZiJV937INGb+wiBkAjmGtQUUYRPkVL2Q+/gj+9Vog1Ewd2wNvNmpNMUd+c+euxoc5u5YZMuCUgky9EUPw==}
-    peerDependencies:
-      svelte: ^3.54.0 || ^4.0.0 || ^5.0.0
-
   svelte@5.0.0-next.178:
     resolution: {integrity: sha512-Hr/h/fV+6h7FBoZjop+f8Goc32nfsNP9YWjcWVSZ0kTt3UIWWQbj3rFpaF1b2173fklIq+HJLzrFxC1XMnBfSw==}
     engines: {node: '>=18'}
@@ -1742,6 +1752,10 @@ snapshots:
       '@floating-ui/utils': 0.2.4
 
   '@floating-ui/utils@0.2.4': {}
+
+  '@fontsource/jetbrains-mono@5.0.20': {}
+
+  '@fontsource/manrope@5.0.20': {}
 
   '@humanwhocodes/module-importer@1.0.1': {}
 
@@ -2587,6 +2601,8 @@ snapshots:
     dependencies:
       wrappy: 1.0.2
 
+  open-props@1.7.5: {}
+
   optionator@0.9.4:
     dependencies:
       deep-is: 0.1.4
@@ -2878,10 +2894,6 @@ snapshots:
       postcss: 8.4.39
       postcss-load-config: 4.0.2(postcss@8.4.39)
       typescript: 5.5.3
-
-  svelte-radix@1.1.0(svelte@5.0.0-next.178):
-    dependencies:
-      svelte: 5.0.0-next.178
 
   svelte@5.0.0-next.178:
     dependencies:

@@ -1,8 +1,15 @@
 <script lang="ts">
 	import { ModeWatcher } from 'mode-watcher';
-	import '../app.css';
+
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
+
+	import 'open-props/style';
+	import 'open-props/normalize';
+	import 'open-props/buttons';
+
+	import '../app.css';
+
 	let { children } = $props();
 </script>
 
