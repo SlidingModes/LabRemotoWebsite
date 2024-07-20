@@ -1,5 +1,5 @@
 ---
-title: First post
+title: Example
 date: 2023-4-14
 thumbnail: /images/uploads/pixelarttest.webp
 description: First post. Edited by DecapCMS
@@ -8,12 +8,13 @@ categories:
   - svelte
 published: true
 ---
-## Markdown
 
-Hey friends! 👋
+<script>
+  import Counter from './counter.svelte'
+</script>
 
-```typescript
-function greet(name: string) {
-	console.log(`Hey ${name}! 👋`)
-}
-```
+## Counter
+
+The counter is rendered inside Markdown.
+
+<Counter />
