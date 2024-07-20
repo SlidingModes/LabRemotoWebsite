@@ -2,7 +2,11 @@
 	import { formatDate } from '$lib/utils';
 	import * as config from '$lib/config';
 
-	export let data;
+	interface Props {
+		data: any;
+	}
+
+	let { data }: Props = $props();
 </script>
 
 <svelte:head>
