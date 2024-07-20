@@ -15,7 +15,7 @@
 			<a href="/about">About</a>
 		</li>
 		<li>
-			<a href="/contact">Contact</a>
+			<a href="/posts">Posts</a>
 		</li>
 		<li>
 			<a href="/rss.xml" target="_blank">RSS</a>
