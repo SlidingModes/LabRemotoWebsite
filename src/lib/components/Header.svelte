@@ -1,6 +1,8 @@
 <script lang="ts">
 	import * as config from '$lib/config';
 	import DarkmodeButton from './DarkmodeButton.svelte';
+	import { Separator } from 'bits-ui';
+	let loggedIn = false;
 </script>
 
 <header class="pico container">
@@ -19,9 +21,14 @@
 			<li>
 				<a href="/posts">Posts</a>
 			</li>
+			<li>
+				{#if loggedIn}
+					<button onclick={() => (location.href = '/logout')}>Logout</button>
+				{:else}
+					<button onclick={() => (location.href = '/login')}>Login</button>
+				{/if}
+			</li>
 			<li><DarkmodeButton /></li>
 		</ul>
-
-		<!-- Theme -->
 	</nav>
 </header>

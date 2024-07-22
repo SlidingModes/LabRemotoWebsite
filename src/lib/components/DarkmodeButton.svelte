@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { DropdownMenu } from 'bits-ui';
 	import { SunMoon } from 'lucide-svelte';
-	import { modeWatcher } from '$lib/stores.svelte';
+	import { modeWatcher } from '$lib/stores/modeWatcher.svelte.ts';
 </script>
 
 <DropdownMenu.Root>
-	<DropdownMenu.Trigger>
+	<DropdownMenu.Trigger class="outline contrast">
 		<SunMoon />
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content sideOffset={8}>

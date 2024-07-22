@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { modeWatcher } from '$lib/stores.svelte';
+	import { modeWatcher } from '$lib/stores/modeWatcher.svelte';
 	function handleStorage(event: StorageEvent) {
 		if (event.key === 'theme') {
 			switch (event.newValue) {
