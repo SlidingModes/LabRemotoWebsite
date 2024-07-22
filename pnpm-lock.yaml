@@ -14,6 +14,9 @@ importers:
       '@fontsource/manrope':
         specifier: ^5.0.20
         version: 5.0.20
+      '@picocss/pico':
+        specifier: ^2.0.6
+        version: 2.0.6
       bits-ui:
         specifier: ^0.21.12
         version: 0.21.12(svelte@5.0.0-next.178)
@@ -23,9 +26,6 @@ importers:
       lucide-svelte:
         specifier: ^0.411.0
         version: 0.411.0(svelte@5.0.0-next.178)
-      mode-watcher:
-        specifier: ^0.4.0
-        version: 0.4.0(svelte@5.0.0-next.178)
       tailwind-merge:
         specifier: ^2.4.0
         version: 2.4.0
@@ -338,6 +338,10 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@picocss/pico@2.0.6':
+    resolution: {integrity: sha512-/d8qsykowelD6g8k8JYgmCagOIulCPHMEc2NC4u7OjmpQLmtSetLhEbt0j1n3fPNJVcrT84dRp0RfJBn3wJROA==}
+    engines: {node: '>=18.19.0'}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -1083,11 +1087,6 @@ packages:
     resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
     hasBin: true
 
-  mode-watcher@0.4.0:
-    resolution: {integrity: sha512-zuHYgY7Cq4NAB1JHj0NpxTKfx6RMH3A2yAoDfjF1UTaIbgWzRyCQRcK/uE9EuVt2PqAGZZbqxRC0h9eB1hfyJQ==}
-    peerDependencies:
-      svelte: ^4.0.0 || ^5.0.0-next.1
-
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
@@ -1806,6 +1805,8 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
+
+  '@picocss/pico@2.0.6': {}
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
@@ -2558,10 +2559,6 @@ snapshots:
   mkdirp@0.5.6:
     dependencies:
       minimist: 1.2.8
-
-  mode-watcher@0.4.0(svelte@5.0.0-next.178):
-    dependencies:
-      svelte: 5.0.0-next.178
 
   mri@1.2.0: {}
 
