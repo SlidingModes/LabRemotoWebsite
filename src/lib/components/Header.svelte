@@ -2,7 +2,8 @@
 	import * as config from '$lib/config';
 	import DarkmodeButton from './DarkmodeButton.svelte';
 	import { Separator } from 'bits-ui';
-	let loggedIn = false;
+	import { pb } from '$lib/stores/pocketbase.svelte';
+	let loggedIn = $derived(pb.authStoreIsValid());
 </script>
 
 <header class="pico container">
@@ -23,12 +24,28 @@
 			</li>
 			<li>
 				{#if loggedIn}
-					<button onclick={() => (location.href = '/logout')}>Logout</button>
+					<button
+						onclick={() => {
+							pb.logout();
+							window.location.href = '/';
+						}}>Logout</button
+					>
 				{:else}
-					<button onclick={() => (location.href = '/login')}>Login</button>
+					<a href="/login" class="button">Inicia sesión</a>
 				{/if}
 			</li>
 			<li><DarkmodeButton /></li>
 		</ul>
 	</nav>
 </header>
+
+<style>
+	.button {
+		background-color: var(--pico-primary-background);
+		color: var(--pico-primary-inverse);
+	}
+	.button:hover {
+		background-color: var(--pico-primary-hover-background);
+		text-decoration: none;
+	}
+</style>

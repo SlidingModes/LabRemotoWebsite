@@ -1,21 +1,18 @@
 <script lang="ts">
 	import { title } from '$lib/config';
 
-	import PocketBase from 'pocketbase';
+	import { pb } from '$lib/stores/pocketbase.svelte';
 
-	const pb = new PocketBase('https://backend.localhost');
-	console.log(pb.authStore.isValid ?? 'Not valid');
-	console.log(pb.authStore.token ?? 'No token');
-	console.log(pb.authStore.model ?? 'No model');
+	$effect(() => {
+		if (pb.authStoreIsValid()) {
+			location.href = '/';
+		}
+	});
 
 	async function handleLogin(event: SubmitEvent) {
-		console.log(username, password);
-		const authData = await pb.collection('users').authWithPassword(username, password);
-
-		console.log(pb.authStore.isValid ?? 'Not valid');
-		console.log(pb.authStore.token ?? 'No token');
-		console.log(pb.authStore.model ?? 'No model');
-		if (pb.authStore.isValid) {
+		const authData = await pb.login(username, password);
+		console.log(authData);
+		if (pb.authStoreIsValid()) {
 			location.href = '/';
 		}
 	}

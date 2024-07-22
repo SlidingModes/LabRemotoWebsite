@@ -9,12 +9,15 @@
 	import * as config from '$lib/config';
 	let { children } = $props();
 	import ModeWatcher from '$lib/components/ModeWatcher.svelte';
+	import { pb } from '$lib/stores/pocketbase.svelte';
+	let loggedIn = $derived(pb.authStoreIsValid());
 </script>
 
 <svelte:head>
 	<title>{config.title}</title>
 	<meta name="description" content={config.description} />
 </svelte:head>
+
 <ModeWatcher />
 
 <Header />
