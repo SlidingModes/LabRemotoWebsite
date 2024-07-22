@@ -12,13 +12,13 @@
 <ModeWatcher />
 
 <div>
-	<header class="pico">
+	<header>
 		<Header />
 	</header>
 	<main>
 		{@render children()}
 	</main>
-	<footer class="pico">
+	<footer>
 		<Footer />
 	</footer>
 </div>

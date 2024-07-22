@@ -1,5 +1,5 @@
 function createModeWatcher() {
-    let mode = $state('system'); // 'light' | 'dark' | 'system'
+    let mode = $state('dark'); // 'light' | 'dark' | 'system'
     let isStorage = $state('');
 
     return {

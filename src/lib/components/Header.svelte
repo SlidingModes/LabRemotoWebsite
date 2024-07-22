@@ -3,7 +3,7 @@
 	import DarkmodeButton from './DarkmodeButton.svelte';
 </script>
 
-<nav class="pico">
+<nav>
 	<!-- Title -->
 	<a href="/" class="title">
 		<b>{config.title}</b>
@@ -19,10 +19,3 @@
 	<!-- Theme -->
 	<DarkmodeButton />
 </nav>
-
-<style>
-	nav {
-		background-color: var(--pico-background-color);
-		color: var(--pico-color);
-	}
-</style>
