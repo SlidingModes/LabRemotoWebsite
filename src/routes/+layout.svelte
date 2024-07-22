@@ -4,21 +4,22 @@
 
 	import '@picocss/pico/css/pico.conditional.red.min.css';
 	import '../app.css';
+
+	import * as config from '$lib/config';
 	let { children } = $props();
-	import { modeWatcher } from '$lib/stores.svelte';
 	import ModeWatcher from '$lib/components/ModeWatcher.svelte';
 </script>
 
+<svelte:head>
+	<title>{config.title}</title>
+	<meta name="description" content={config.description} />
+</svelte:head>
+
 <ModeWatcher />
 
-<div>
-	<header>
-		<Header />
-	</header>
-	<main>
-		{@render children()}
-	</main>
-	<footer>
-		<Footer />
-	</footer>
-</div>
+<Header />
+<main>
+	{@render children()}
+</main>
+
+<Footer />

@@ -1,4 +1,13 @@
-<h1>Welcome to Sveltekit</h1>
+<script lang="ts">
+	import VideoStreamPlayer from '$lib/components/VideoStreamPlayer.svelte';
+	import { description } from '$lib/config';
+</script>
+
+<div class="pico container">
+	<h1>{description}</h1>
+	<VideoStreamPlayer streamURL="https://example.com" streamKey="1234" />
+</div>
+
 <p>
 	This is a SvelteKit project. You can find the source code on{' '}
 	<a href="https://kit.svelte.dev/">GitHub</a>.

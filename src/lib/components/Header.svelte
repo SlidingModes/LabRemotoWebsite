@@ -3,19 +3,25 @@
 	import DarkmodeButton from './DarkmodeButton.svelte';
 </script>
 
-<nav>
-	<!-- Title -->
-	<a href="/" class="title">
-		<b>{config.title}</b>
-	</a>
+<header class="pico container">
+	<nav>
+		<!-- Title -->
+		<ul>
+			<li>
+				<a href="/" class="title">
+					<b>{config.title}</b>
+				</a>
+			</li>
+		</ul>
 
-	<!-- Navigation -->
-	<ul class="links">
-		<li>
-			<a href="/posts">Posts</a>
-		</li>
-	</ul>
+		<!-- Navigation -->
+		<ul>
+			<li>
+				<a href="/posts">Posts</a>
+			</li>
+			<li><DarkmodeButton /></li>
+		</ul>
 
-	<!-- Theme -->
-	<DarkmodeButton />
-</nav>
+		<!-- Theme -->
+	</nav>
+</header>
