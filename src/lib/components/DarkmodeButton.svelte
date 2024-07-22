@@ -2,9 +2,6 @@
 	import { DropdownMenu } from 'bits-ui';
 	import { SunMoon } from 'lucide-svelte';
 	import { modeWatcher } from '$lib/stores.svelte';
-	/* $effect(() => {
-		document.documentElement.setAttribute('data-modeWatcher', modeWatcher.mode);
-	}); */
 </script>
 
 <DropdownMenu.Root>
