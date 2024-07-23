@@ -57,9 +57,3 @@
 		</nav>
 	{/if}
 </header>
-
-<style>
-	.group {
-		display: inline-flex;
-	}
-</style>

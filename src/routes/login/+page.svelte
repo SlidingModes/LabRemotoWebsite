@@ -19,10 +19,6 @@
 				location.href = '/';
 			}
 		} catch (error) {
-			if (error instanceof ClientResponseError) {
-				console.error('Error during login:', error);
-				// Manejar el error adecuadamente aquí
-			}
 			console.error('Error during login:', error);
 			// Manejar el error adecuadamente aquí
 		}

@@ -2,6 +2,7 @@ import PocketBase from 'pocketbase';
 import { pocketbaseURL } from '$lib/config';
 
 function newPocketBase() {
+    console.log('pocketbaseURL', pocketbaseURL);
     const pb = new PocketBase(pocketbaseURL);
 
     return {

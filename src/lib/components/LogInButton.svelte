@@ -7,11 +7,15 @@
 
 {#if loggedIn}
 	<button
+		class="inline-flex items-center"
 		onclick={() => {
 			pb.logout();
 			window.location.href = '/';
-		}}>Logout</button
+		}}
 	>
+		<LogIn class="w-4 h-4" />
+		<div class="hidden md:block ms-2">Cerrar sesión</div>
+	</button>
 {:else}
 	<a href="/login" class="button">
 		<LogIn class="w-4 h-4" />
