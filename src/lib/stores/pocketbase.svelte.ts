@@ -6,7 +6,14 @@ function newPocketBase() {
 
     return {
         login(username: string, password: string) {
-            return pb.collection('users').authWithPassword(username, password);
+            try {
+                return pb.collection('users').authWithPassword(username, password);
+            } catch (error) {
+                // Handle the error here
+                console.log('Aqui')
+                console.error('Error authenticating with password:', error);
+                throw error; // Rethrow the error to be handled by the caller
+            }
         },
         authStoreIsValid() {
             return pb.authStore.isValid;

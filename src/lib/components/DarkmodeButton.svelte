@@ -1,14 +1,18 @@
 <script lang="ts">
 	import { DropdownMenu } from 'bits-ui';
 	import { SunMoon } from 'lucide-svelte';
-	import { modeWatcher } from '$lib/stores/modeWatcher.svelte.ts';
+	import { modeWatcher } from '$lib/stores/modeWatcher.svelte';
 </script>
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger class="outline contrast">
-		<SunMoon />
+		<SunMoon class="h-5 w-5" />
 	</DropdownMenu.Trigger>
-	<DropdownMenu.Content sideOffset={8}>
+	<DropdownMenu.Content
+		sideOffset={8}
+		class="w-full max-w-16 rounded-xl border border-muted bg-background px-1 py-1.5 shadow-popover"
+		style="background-color: var(--pico-background-color);"
+	>
 		<DropdownMenu.Item
 			on:click={() => {
 				modeWatcher.light();

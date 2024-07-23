@@ -1,19 +1,30 @@
 <script lang="ts">
 	import { title } from '$lib/config';
-
 	import { pb } from '$lib/stores/pocketbase.svelte';
+	import { enhance } from '$app/forms';
 
-	$effect(() => {
+	$effect.pre(() => {
 		if (pb.authStoreIsValid()) {
 			location.href = '/';
 		}
 	});
 
 	async function handleLogin(event: SubmitEvent) {
-		const authData = await pb.login(username, password);
-		console.log(authData);
-		if (pb.authStoreIsValid()) {
-			location.href = '/';
+		console.log('event', event);
+		event.preventDefault();
+		try {
+			const authData = await pb.login(username, password);
+			console.log(authData);
+			if (pb.authStoreIsValid()) {
+				location.href = '/';
+			}
+		} catch (error) {
+			if (error instanceof ClientResponseError) {
+				console.error('Error during login:', error);
+				// Manejar el error adecuadamente aquí
+			}
+			console.error('Error during login:', error);
+			// Manejar el error adecuadamente aquí
 		}
 	}
 
@@ -53,7 +64,7 @@
 			</fieldset>
 
 			<div class="text-center my-auto">
-				<input class="max-w-60 disabled" type="submit" />
+				<input class="max-w-60" type="submit" disabled={username === '' || password === ''} />
 			</div>
 		</form>
 		<footer>
@@ -66,3 +77,9 @@
 		</footer>
 	</article>
 </div>
+
+<style>
+	article {
+		--pico-border-radius: 1.5rem;
+	}
+</style>
