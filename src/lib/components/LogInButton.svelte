@@ -36,7 +36,11 @@
 		align-items: center;
 	}
 	.button:hover {
-		background-color: var(--pico-primary-hover-background);
+		background-color: var(--pico-secondary-hover-background);
+		text-decoration: none;
+	}
+	button:hover {
+		background-color: var(--pico-secondary-hover-background);
 		text-decoration: none;
 	}
 </style>

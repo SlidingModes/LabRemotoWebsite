@@ -4,6 +4,7 @@
 
 <!-- Footer -->
 <footer class="pico container text-center">
+	<hr />
 	<p>
 		{config.title} - Análisis de Sistemas y Señales &copy Facultad de Ingeniería, UNAM {new Date().getFullYear()}
 	</p>

@@ -8,8 +8,7 @@
 		}
 	});
 
-	async function handleLogin(event: SubmitEvent) {
-		event.preventDefault();
+	async function handleLogin() {
 		try {
 			const authData = await pb.login(username, password, role);
 			logInStatus = 'success';
@@ -40,7 +39,7 @@
 				<p>Error al conectar con el servidor</p>
 				<p>Si no puedes iniciar sesión, prueba desactivando tu AdBlocker.</p>
 				<footer>
-					<button onclick={() => goto('/login')}>Iniciar sesión</button>
+					<button onclick={() => (location.href = '/login')}>Iniciar sesión</button>
 				</footer>
 			</article>
 		</dialog>
@@ -50,7 +49,7 @@
 <div class="container max-w-xl pico">
 	<article class="container">
 		<header class="text-center"><b>Iniciar sesión</b></header>
-		<form class="container" onsubmit={handleLogin}>
+		<form class="container">
 			<fieldset class="grid">
 				<label>
 					Usuario
@@ -89,8 +88,10 @@
 			<div class="text-center my-auto">
 				<input
 					class="max-w-60"
-					type="submit"
+					type="button"
 					disabled={username === '' || password === '' || role === ''}
+					value="Iniciar sesión"
+					onclick={handleLogin}
 				/>
 			</div>
 		</form>

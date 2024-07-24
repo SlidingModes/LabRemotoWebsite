@@ -20,6 +20,18 @@
 						Inicia sesión
 						<LogIn class="w-4 h-4 ms-2" />
 					</a>
+				{:else if !pb.isRole('students')}
+					<p></p>
+					<p>Accede al panel de administrador para modificar a los usuarios</p>
+					<p>O revisa la página de prácticas</p>
+
+					<div class="text-center items-center">
+						<a href="/practicas" class="secondary no-underline rounded-lg text-sm px-4 py-2"
+							>Prácticas</a
+						>
+						<a href="/admin" class="button no-underline rounded-lg text-sm px-4 py-2">Admin Panel</a
+						>
+					</div>
 				{:else}
 					<p>Puedes reservar un horario o, si ya tienes uno, ingresar a la práctica.</p>
 
@@ -59,5 +71,28 @@
 
 	article figure {
 		margin: auto;
+	}
+
+	.button {
+		background-color: var(--pico-primary-background);
+		color: var(--pico-primary-inverse);
+		display: inline-flex;
+		align-items: center;
+	}
+	.button:hover {
+		background-color: var(--pico-primary-hover-background);
+		text-decoration: none;
+	}
+
+	.secondary {
+		background-color: var(--pico-secondary-background);
+		color: var(--pico-secondary-inverse);
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.secondary:hover {
+		background-color: var(--pico-primary-hover-background);
+		text-decoration: none;
 	}
 </style>

@@ -7,7 +7,7 @@ function newPocketBase() {
     const pb = new PocketBase(pocketbaseURL);
 
     return {
-        get pb() {
+        get instance() {
             return pb;
         },
         login(username: string, password: string, role: string = 'users') {
