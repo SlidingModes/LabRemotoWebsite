@@ -1,8 +1,11 @@
 <script>
 	import { pb } from '$lib/stores/pocketbase.svelte';
-	import { LogIn } from 'lucide-svelte';
+	import { LogIn, LogOut } from 'lucide-svelte';
 
-	let loggedIn = $derived(pb.authStoreIsValid());
+	let loggedIn = $state(pb.isLoggedIn());
+	$effect.pre(() => {
+		loggedIn = pb.isLoggedIn();
+	});
 </script>
 
 {#if loggedIn}
@@ -13,7 +16,7 @@
 			window.location.href = '/';
 		}}
 	>
-		<LogIn class="w-4 h-4" />
+		<LogOut class="w-4 h-4" />
 		<div class="hidden md:block ms-2">Cerrar sesión</div>
 	</button>
 {:else}
