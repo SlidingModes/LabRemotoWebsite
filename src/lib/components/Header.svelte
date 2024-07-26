@@ -4,6 +4,7 @@
 	import { Avatar } from 'bits-ui';
 	import LogInButton from './LogInButton.svelte';
 	import { Menu } from 'lucide-svelte';
+	import { slide } from 'svelte/transition';
 
 	let openDrawer = $state(false);
 </script>
@@ -11,8 +12,10 @@
 {#snippet navLinks()}
 	<!-- Navigation -->
 	<ul>
-		<li>
-			<a href="/posts"><b>Posts</b></a>
+		<li class="text-right">
+			<a href="/"><b>Inicio</b></a>
+			<a href="/"><b>Prácticas</b></a>
+			<a href="/"><b>Administrar</b></a>
 		</li>
 	</ul>
 {/snippet}
@@ -50,9 +53,11 @@
 		</ul>
 	</nav>
 	{#if openDrawer}
-		<nav>
-			<div class="display-block text-right">
-				{@render navLinks()}
+		<nav transition:slide>
+			<div class="container-fluid">
+				<aside class="text-right">
+					{@render navLinks()}
+				</aside>
 			</div>
 		</nav>
 	{/if}

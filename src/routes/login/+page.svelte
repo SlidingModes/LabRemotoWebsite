@@ -97,7 +97,7 @@
 		</form>
 		<footer class="flex justify-between items-center">
 			<small>
-				¿Olvidaste tu contraseña? <a href="/">Recuperar </a>
+				¿Olvidaste tu contraseña? <a href="/login/password-reset">Recuperar </a>
 			</small>
 			<small>
 				<a href="/admin" class="no-underline">Admin</a>
