@@ -1,5 +1,5 @@
 <script>
-	import { pb } from '$lib/stores/pocketbase.svelte';
+	import { pb } from '$lib/pb/pocketbase.svelte';
 	import { LogIn, LogOut } from 'lucide-svelte';
 
 	let loggedIn = $state(pb.isLoggedIn());

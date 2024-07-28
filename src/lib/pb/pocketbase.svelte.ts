@@ -1,7 +1,6 @@
 import PocketBase, { type AuthModel, type RecordModel } from 'pocketbase';
 import { pocketbaseURL } from '$lib/config';
 import { ClientResponseError, } from 'pocketbase';
-import { get } from 'svelte/store';
 
 
 export type User = {
@@ -145,7 +144,7 @@ function newPocketBase() {
         isLoggedIn() {
             return this.authStoreIsValid();
         },
-        getUser() {
+        get loggedUser() {
             return this.authStoreModel();
         },
         isRole(role: string) {
@@ -156,6 +155,36 @@ function newPocketBase() {
             return resetPassword(email, role);
         },
         createUser(collection: string, data: User) {
+            return createUser(collection, data);
+        },
+        createUserFromFields(
+            name: string,
+            username: string,
+            email: string,
+            password: string,
+            collection: string,
+            passwordConfirm: string = '',
+            emailVisibility: boolean = true) {
+
+            if (!name || !username || !email || !password) {
+                console.error('Missing required fields');
+                return null;
+            }
+            if (passwordConfirm.length === 0) {
+                passwordConfirm = password;
+            }
+            if (password !== passwordConfirm) {
+                console.error('Passwords do not match');
+                return null;
+            }
+            const data = {
+                name,
+                username,
+                email,
+                emailVisibility,
+                passwordConfirm,
+                password
+            };
             return createUser(collection, data);
         },
         getAll(collection: string) {

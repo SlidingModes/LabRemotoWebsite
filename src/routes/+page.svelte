@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { description } from '$lib/config';
-	import { pb } from '$lib/stores/pocketbase.svelte';
+	import { pb } from '$lib/pb/pocketbase.svelte';
 	import { LogIn } from 'lucide-svelte';
 	let loggedIn = $derived(pb.authStoreIsValid());
 </script>

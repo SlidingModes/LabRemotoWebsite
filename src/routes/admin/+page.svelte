@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { pb } from '$lib/stores/pocketbase.svelte';
-	import type { User } from '$lib/stores/pocketbase.svelte';
-	import { UserRoundPlus, ListFilter, Upload } from 'lucide-svelte';
-	import { slide } from 'svelte/transition';
+	import { pb } from '$lib/pb/pocketbase.svelte';
+	import type { User } from '$lib/pb/pocketbase.svelte';
+	import { UserRoundPlus, Upload } from 'lucide-svelte';
+	import AddUser from '$lib/components/AddUser.svelte';
 	const data = {
 		name: 'test',
 		username: 'test',
@@ -16,6 +16,7 @@
 	let dataFromPB: User[] = $state([]);
 	let role = $state('Estudiante');
 	let filterCondition: Function = () => true;
+	let modalOpen = $state(false);
 
 	async function wrapSingleUser(userPromise: Promise<User | null>): Promise<User[]> {
 		const user = await userPromise;
@@ -57,6 +58,12 @@
 </script>
 
 <div class="pico container">
+	<dialog open={modalOpen}>
+		<AddUser onclick={() => (modalOpen = false)} />
+	</dialog>
+</div>
+
+<div class="pico container-fluid">
 	<div role="group">
 		<button
 			onclick={async () => {
@@ -113,7 +120,7 @@
 			><Upload class="w-4 h-4 lg:mr-1" />
 			<p class="hidden lg:contents">Desde archivo</p></button
 		>
-		<button class="inline-flex items-center contrast"
+		<button class="inline-flex items-center contrast" onclick={() => (modalOpen = true)}
 			><UserRoundPlus class="w-4 h-4 lg:mr-1" />
 			<p class="hidden lg:contents">Añadir</p></button
 		>

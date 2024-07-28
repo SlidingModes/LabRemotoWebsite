@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { pb } from '$lib/stores/pocketbase.svelte';
+	import { pb } from '$lib/pb/pocketbase.svelte';
 
 	$effect.pre(() => {
 		if (pb.isLoggedIn()) {
@@ -12,7 +12,7 @@
 		try {
 			const authData = await pb.login(username, password, role);
 			logInStatus = 'success';
-			const user = pb.getUser();
+			const user = pb.loggedUser;
 
 			if (pb.authStoreIsValid()) {
 				location.href = '/';

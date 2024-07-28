@@ -1,6 +1,6 @@
 <script>
 	import { ClientResponseError } from 'pocketbase';
-	import { pb } from '$lib/stores/pocketbase.svelte';
+	import { pb } from '$lib/pb/pocketbase.svelte';
 	import { goto } from '$app/navigation';
 
 	let role = $state('');
