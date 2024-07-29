@@ -2,9 +2,16 @@
 	import { goto } from '$app/navigation';
 	import { pb } from '$lib/pb/pocketbase.svelte';
 
+	let { data } = $props();
+
+	let user = data.user;
+
 	$effect.pre(() => {
-		if (pb.isLoggedIn()) {
+		/* 		if (pb.isLoggedIn()) {
 			location.href = '/';
+		} */
+		if (user) {
+			goto('/');
 		}
 	});
 

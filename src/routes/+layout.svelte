@@ -7,8 +7,10 @@
 	import '../app.css';
 
 	import * as config from '$lib/config';
-	let { children } = $props();
+	let { children, data } = $props();
 	import ModeWatcher from '$lib/components/ModeWatcher.svelte';
+
+	let loggedIn = data.user !== null;
 </script>
 
 <svelte:head>
@@ -18,7 +20,7 @@
 
 <ModeWatcher />
 
-<Header />
+<Header {loggedIn} />
 <main>
 	{@render children()}
 </main>

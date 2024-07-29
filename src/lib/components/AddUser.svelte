@@ -1,7 +1,15 @@
 <script lang="ts">
-	import { X, Eye, EyeOff } from 'lucide-svelte';
+	import { X, Eye, EyeOff, Info } from 'lucide-svelte';
 	import type { MouseEventHandler } from 'svelte/elements';
-	import { pb } from '$lib/pb/pocketbase.svelte';
+	import {
+		pb,
+		type User,
+		invalidEmailError,
+		invalidCollectionNameError,
+		invalidNameError,
+		invalidPasswordError,
+		invalidUsernameError
+	} from '$lib/pb/pocketbase.svelte';
 	let { onclick }: { onclick?: MouseEventHandler<HTMLButtonElement> } = $props();
 
 	let name = $state('');
@@ -10,13 +18,32 @@
 	let role = $state('');
 	let username = $state('');
 	let showPassword = $state(false);
+	let status = $state('');
+	let success = $state(false);
+	$inspect(status);
 
 	async function handleAddUser(e: SubmitEvent) {
-		console.log('Enviado');
 		e.preventDefault();
-		// Manda el email como username
-		const user = pb.createUserFromFields(name, username, email, password, role);
-		console.log(user);
+		let user: User | null = null;
+
+		try {
+			user = await pb.createUserFromFields(name, username, email, password, role);
+			status = 'Usuario añadido correctamente.';
+			success = true;
+		} catch (error) {
+			if (error instanceof invalidEmailError) {
+				status = 'Correo electrónico inválido o en uso.';
+			} else if (error instanceof invalidCollectionNameError) {
+				status = 'Rol inválido.';
+			} else if (error instanceof invalidUsernameError) {
+				status = 'Nombre de usuario inválido o en uso.';
+			} else if (error instanceof invalidPasswordError) {
+				status = 'Contraseña inválida.';
+			} else {
+				console.error('Error during user creation:', error);
+				status = (error as Error).message;
+			}
+		}
 	}
 </script>
 
@@ -30,6 +57,17 @@
 		>
 	</header>
 	<p>Para añadir a un nuevo usuario, por favor, rellene el siguiente formulario.</p>
+	{#if status}
+		<div
+			class="flex items-center p-4 mb-4 text-sm rounded-lg bg-gray-50 dark:bg-gray-800 {success
+				? 'text-green-800 dark:text-green-400'
+				: 'text-red-800 dark:text-red-400'}"
+			role="alert"
+		>
+			<Info class="flex-shrink-0 inline w-4 h-4 me-1" />
+			<span class="font-medium">{status}</span>
+		</div>
+	{/if}
 	<form onsubmit={handleAddUser}>
 		<div class="grid">
 			<label for="name"
@@ -41,6 +79,7 @@
 				<input type="text" id="username" bind:value={username} name="username" required /></label
 			>
 		</div>
+
 		<div class="grid">
 			<label for="email"
 				>Correo electrónico

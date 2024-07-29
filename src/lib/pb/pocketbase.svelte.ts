@@ -14,6 +14,41 @@ export type User = {
     role?: string;
 };
 
+export class invalidEmailError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = 'InvalidEmailError';
+    }
+}
+
+export class invalidUsernameError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = 'InvalidUsernameError';
+    }
+}
+
+export class invalidPasswordError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = 'InvalidPasswordError';
+    }
+}
+
+export class invalidNameError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = 'InvalidNameError';
+    }
+}
+
+export class invalidCollectionNameError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = 'InvalidCollectionName';
+    }
+}
+
 function mapUser(record: RecordModel): User {
 
     let role = record.collectionName;
@@ -68,7 +103,16 @@ function newPocketBase() {
             return await pb.collection(collection).create(data);
         } catch (error) {
             if (error instanceof ClientResponseError) {
-                console.log(error.data.data);
+
+                if (error.data.data.email) {
+                    throw new invalidEmailError(error.data.data.email);
+                } else if (error.data.data.username) {
+                    throw new invalidUsernameError(error.data.data.username);
+                } else if (error.data.data.password) {
+                    throw new invalidPasswordError(error.data.data.password);
+                } else {
+                    console.log(error.data.data);
+                }
             }
             return null;
         }
@@ -154,10 +198,15 @@ function newPocketBase() {
         resetPassword(email: string, role: string) {
             return resetPassword(email, role);
         },
-        createUser(collection: string, data: User) {
-            return createUser(collection, data);
+        async createUser(collection: string, data: User): Promise<User | null> {
+            try {
+                return await createUser(collection, data);
+            } catch (error) {
+                console.log('ClientResponseError');
+                throw error; // Rethrow the error to be handled by the caller
+            }
         },
-        createUserFromFields(
+        async createUserFromFields(
             name: string,
             username: string,
             email: string,
@@ -185,7 +234,11 @@ function newPocketBase() {
                 passwordConfirm,
                 password
             };
-            return createUser(collection, data);
+            try {
+                return await createUser(collection, data);
+            } catch (error) {
+                throw error; // Rethrow the error to be handled by the caller
+            }
         },
         getAll(collection: string) {
             return getAll(collection);
