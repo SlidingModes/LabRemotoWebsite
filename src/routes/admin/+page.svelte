@@ -1,22 +1,44 @@
 <script lang="ts">
 	import { pb } from '$lib/pb/pocketbase.svelte';
 	import type { User } from '$lib/pb/pocketbase.svelte';
-	import { UserRoundPlus, Upload } from 'lucide-svelte';
+	import { UserRoundPlus, Upload, Undo2, RefreshCcw } from 'lucide-svelte';
 	import AddUser from '$lib/components/AddUser.svelte';
-	const data = {
-		name: 'test',
-		username: 'test',
-		email: 'test@example.com',
-		emailVisibility: false,
-		password: '1234567890',
-		passwordConfirm: '1234567890'
-	};
+	import AddFromFile from '$lib/components/AddFromFile.svelte';
+	import { fade } from 'svelte/transition';
+	import LoginRequiredModal from '$lib/components/LoginRequiredModal.svelte';
+	import UnauthorizedModal from '$lib/components/UnauthorizedModal.svelte';
+
+	let { data } = $props();
 
 	let loading = $state(true);
 	let dataFromPB: User[] = $state([]);
-	let role = $state('Estudiante');
-	let filterCondition: Function = () => true;
-	let modalOpen = $state(false);
+	let role = $state('students');
+	let addUserModal = $state(false);
+	let addFromFileModal = $state(false);
+	let selectedUsers: User[] = $state([]);
+	let search = $state('');
+
+	$inspect(selectedUsers);
+
+	async function handleSearch() {
+		fillTable(async () => {
+			if (search) {
+				try {
+					const user = await wrapSingleUser(
+						pb.getFirstListItem(
+							role,
+							`(name~'${search}' || username~'${search}' || email~'${search}')`
+						)
+					);
+					return user;
+				} catch (error) {
+					return [];
+				}
+			} else {
+				return pb.getAll(role);
+			}
+		});
+	}
 
 	async function wrapSingleUser(userPromise: Promise<User | null>): Promise<User[]> {
 		const user = await userPromise;
@@ -24,15 +46,6 @@
 			return [user];
 		} else {
 			return [];
-		}
-	}
-
-	async function printUser() {
-		const user: User | null = await pb.getByName('Antonio Dromundo', 'students');
-		if (user) {
-			console.log(user);
-		} else {
-			console.log('No encontrado');
 		}
 	}
 
@@ -44,93 +57,169 @@
 		}
 	}
 
-	function matchesField(user: User, field: string, value: string): boolean {
-		return user[field as keyof User] === value;
-	}
-
-	function filterRow(user: User, filterCondition: Function): boolean {
-		return filterCondition(user);
+	async function handleDelete() {
+		for (const user of selectedUsers) {
+			await pb.deleteUser(user);
+		}
+		window.location.reload();
 	}
 
 	$effect(() => {
-		fillTable(() => pb.getAll('students'));
+		if (!search) {
+			fillTable(() => pb.getAll(role));
+		}
 	});
 </script>
 
 <div class="pico container">
-	<dialog open={modalOpen}>
-		<AddUser onclick={() => (modalOpen = false)} />
-	</dialog>
+	{#if !pb.isLoggedIn()}
+		<dialog open={!pb.isLoggedIn()} transition:fade>
+			<LoginRequiredModal />
+		</dialog>
+	{:else if pb.isRole('students')}
+		<dialog open={pb.isRole('students')} transition:fade>
+			<UnauthorizedModal />
+		</dialog>
+	{/if}
+	{#if addUserModal}
+		<dialog open={addUserModal} transition:fade>
+			<AddUser onclick={() => (addUserModal = false)} />
+		</dialog>
+	{/if}
+	{#if addFromFileModal}
+		<dialog open={addFromFileModal} transition:fade>
+			<AddFromFile onclick={() => (addFromFileModal = false)} collection={role} />
+		</dialog>
+	{/if}
 </div>
 
-<div class="pico container-fluid">
-	<div role="group">
-		<button
-			onclick={async () => {
-				fillTable(() => wrapSingleUser(pb.createUser('students', data)));
-			}}>Create</button
-		>
-		<button
-			onclick={async () => {
-				fillTable(() => pb.getAll('students'));
-			}}>Read</button
-		>
-		<button
-			onclick={async () => {
-				fillTable(() => wrapSingleUser(pb.getByName('Antonio Dromundo', 'students')));
-			}}>Find one</button
-		>
-		<button
-			onclick={async () => {
-				fillTable(() => pb.deleteByName('test', 'students'));
-			}}>Delete</button
-		>
-	</div>
-	<h3>Alumnos</h3>
-</div>
-
-{#snippet DropdownCheckBox(titulo, opciones)}
-	<details class="dropdown">
-		<summary>{titulo}</summary>
-		<ul>
-			{#each opciones as opcion}
-				<li>
-					<label>
-						<input type="checkbox" name={opcion} />
-						{opcion}
-					</label>
-				</li>
-			{/each}
-		</ul>
-	</details>
-{/snippet}
 <div class="pico container">
 	<div class="text-right">
 		<div class="inline-block">
 			<select bind:value={role} aria-label="Rol" required>
 				<option selected disabled value="Usuario">Ver</option>
-				<option value="Usuario">Todos</option>
-				<option value="Estudiante">Alumna/o</option>
+				<option value="students">Alumna/o</option>
 				<option value="teachers">Maestra/o</option>
 				<option value="supervisors">Supervisor(a)</option>
 			</select>
 		</div>
-
-		<button class="inline-flex items-center outline contrast"
+		<button
+			transition:fade
+			class="inline-flex items-center outline contrast"
+			onclick={() => {
+				search = '';
+				fillTable(() => pb.getAll(role));
+			}}
+		>
+			{#if search}
+				<Undo2 class="w-4 h-4 lg:mr-1" />
+				<p class="hidden lg:contents">Regresar</p>
+			{:else}
+				<RefreshCcw class="w-4 h-4 lg:mr-1" />
+				<p class="hidden lg:contents">Actualizar</p>
+			{/if}
+		</button>
+		<button
+			class="inline-flex items-center outline contrast"
+			onclick={() => (addFromFileModal = true)}
 			><Upload class="w-4 h-4 lg:mr-1" />
 			<p class="hidden lg:contents">Desde archivo</p></button
 		>
-		<button class="inline-flex items-center contrast" onclick={() => (modalOpen = true)}
+		<button class="inline-flex items-center contrast" onclick={() => (addUserModal = true)}
 			><UserRoundPlus class="w-4 h-4 lg:mr-1" />
 			<p class="hidden lg:contents">Añadir</p></button
 		>
 	</div>
 	<article>
-		<hgroup>
-			<h3>Usuarios</h3>
-			<h6>Maneja quien tiene acceso al Laboratorio Remoto</h6>
-		</hgroup>
-		{#if loading}
+		<header>
+			<hgroup in:fade>
+				<h3>Usuarios</h3>
+				<h6>Maneja quien tiene acceso al Laboratorio Remoto</h6>
+			</hgroup>
+
+			{#if selectedUsers.length > 0}
+				<div in:fade class="pico container">
+					<div class="flex items-center justify-between">
+						<h3>Seleccionados: {selectedUsers.length}</h3>
+
+						<div>
+							<button class="contrast" onclick={handleDelete}>Eliminar</button>
+						</div>
+					</div>
+				</div>
+			{:else}
+				<!-- svelte-ignore a11y_no_redundant_roles -->
+				<fieldset role="group">
+					<input
+						class="inline-flex"
+						type="search"
+						name="search"
+						placeholder="Nombre, usuario, email"
+						aria-label="Search"
+						bind:value={search}
+					/>
+					<button onclick={handleSearch}>Buscar</button>
+				</fieldset>
+			{/if}
+		</header>
+
+		{#if !loading}
+			<div class="pico container">
+				<div class="overflow-auto">
+					<table class="striped">
+						<thead>
+							<tr>
+								<th scope="col"
+									><input
+										type="checkbox"
+										checked={selectedUsers.length === dataFromPB!.length}
+										onclick={() => {
+											if (selectedUsers.length === dataFromPB!.length) {
+												selectedUsers = [];
+											} else {
+												selectedUsers = dataFromPB!;
+											}
+										}}
+									/></th
+								>
+								<th scope="col">Nombre</th>
+								<th scope="col">Usuario</th>
+								<th scope="col">Email</th>
+								<th scope="col">Rol</th>
+							</tr>
+						</thead>
+						<tbody>
+							{#if dataFromPB!.length === 0}
+								<tr in:fade>
+									<td colspan="5"><h3>No se encontraron usuarios</h3></td>
+								</tr>
+							{/if}
+							{#each dataFromPB! as user, i}
+								<tr in:fade>
+									<td
+										><input
+											type="checkbox"
+											checked={selectedUsers.length === dataFromPB!.length}
+											onclick={() => {
+												if (selectedUsers[i] !== user) {
+													selectedUsers[i] = user;
+												} else {
+													selectedUsers.splice(i, 1);
+												}
+											}}
+										/></td
+									>
+									<td>{user.name}</td>
+									<td>{user.username}</td>
+									<td>{user.email}</td>
+									<td>{user.role}</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		{:else}
 			<div
 				role="status"
 				class="pico container p-4 space-y-4 border border-gray-200 divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700"
@@ -172,46 +261,16 @@
 				</div>
 				<span class="sr-only">Cargando...</span>
 			</div>
-		{:else}
-			<div class="pico container">
-				<div class="overflow-auto">
-					<table class="striped">
-						<thead>
-							<tr>
-								<th scope="col"><input type="checkbox" /></th>
-								<th scope="col">Nombre</th>
-								<th scope="col">Usuario</th>
-								<th scope="col">Email</th>
-								<th scope="col">Rol</th>
-							</tr>
-						</thead>
-						<tbody>
-							{#if dataFromPB!.length === 0}
-								<tr>
-									<td colspan="4">No se encontraron usuarios</td>
-								</tr>
-							{/if}
-							{#each dataFromPB! as user}
-								{#if role.match('Usuario') || matchesField(user, 'role', role)}
-									<tr>
-										<td><input type="checkbox" /></td>
-										<td>{user.name}</td>
-										<td>{user.username}</td>
-										<td>{user.email}</td>
-										<td>{user.role}</td>
-									</tr>
-								{/if}
-							{/each}
-						</tbody>
-					</table>
-				</div>
-			</div>
 		{/if}
 	</article>
 </div>
 
 <style>
-	.pico article {
+	.pico article,
+	fieldset {
 		--pico-border-radius: 1.5rem;
+	}
+	.pico h3 {
+		margin: auto inherit;
 	}
 </style>

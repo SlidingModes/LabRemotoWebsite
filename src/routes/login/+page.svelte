@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { pb } from '$lib/pb/pocketbase.svelte';
+	import { Eye, EyeOff } from 'lucide-svelte';
 
 	let { data } = $props();
 
 	let user = data.user;
+	let showPassword = $state(false);
 
 	$effect.pre(() => {
 		/* 		if (pb.isLoggedIn()) {
@@ -69,17 +71,27 @@
 						required
 					/>
 				</label>
-				<label>
-					Contraseña
-					<input
-						type="password"
-						name="password"
-						placeholder="**********"
-						autocomplete="current-password"
-						aria-invalid={password.length <= 8 ? undefined : password.length < 32 ? false : true}
-						bind:value={password}
-						required
-					/>
+				<label
+					>Contraseña
+					<!-- svelte-ignore a11y_no_redundant_roles -->
+					<fieldset role="group">
+						<input
+							type={showPassword ? 'text' : 'password'}
+							bind:value={password}
+							id="password"
+							name="password"
+							autocomplete="current-password"
+							aria-invalid={password.length <= 8 ? undefined : password.length < 32 ? false : true}
+							required
+						/>
+						<button type="button" onclick={() => (showPassword = !showPassword)}>
+							{#if showPassword}
+								<EyeOff />
+							{:else}
+								<Eye />
+							{/if}
+						</button>
+					</fieldset>
 				</label>
 				<label>
 					Rol

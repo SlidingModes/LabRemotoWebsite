@@ -15,8 +15,8 @@
 	<ul>
 		<li class="text-right">
 			<a href="/"><b>Inicio</b></a>
-			<a href="/"><b>Prácticas</b></a>
-			<a href="/"><b>Administrar</b></a>
+			<a href="/practicas"><b>Prácticas</b></a>
+			<a href="/admin"><b>Administrar</b></a>
 		</li>
 	</ul>
 {/snippet}

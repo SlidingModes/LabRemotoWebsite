@@ -1,4 +1,4 @@
-import PocketBase, { type AuthModel, type RecordModel } from 'pocketbase';
+import PocketBase, { type AuthModel, type RecordListOptions, type RecordModel } from 'pocketbase';
 import { pocketbaseURL } from '$lib/config';
 import { ClientResponseError, } from 'pocketbase';
 
@@ -13,6 +13,12 @@ export type User = {
     emailVisibility?: boolean,
     role?: string;
 };
+export class userNotFoundError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = 'UserNotFoundError';
+    }
+}
 
 export class invalidEmailError extends Error {
     constructor(message: string) {
@@ -59,8 +65,8 @@ function mapUser(record: RecordModel): User {
         case 'teachers':
             role = 'Profesor';
             break;
-        case 'admins':
-            role = 'Administrador';
+        case 'supervisors':
+            role = 'Supervisor';
             break;
         default:
             role = 'Usuario';
@@ -88,7 +94,6 @@ function newPocketBase() {
     async function resetPassword(email: string, role: string): Promise<User | null> {
         try {
             const record = await pb.collection(role).requestPasswordReset(email);
-            console.log('Password reset', record);
             return null;
         } catch (error) {
             if (error instanceof ClientResponseError) {
@@ -138,7 +143,7 @@ function newPocketBase() {
             return mapUser(record);
         } catch (error) {
             if (error instanceof ClientResponseError) {
-                console.error('No encontrado', error);
+                throw new userNotFoundError(`No se encontró el usuario con ${field} = ${value}`);
             }
             return null;
         }
@@ -146,7 +151,7 @@ function newPocketBase() {
 
     async function deleteUser(user: User) {
         try {
-            const record = await pb.collection('students').delete(user.id!);
+            const record = await pb.collection(user.collectionName!).delete(user.id!);
         } catch (error) {
             if (error instanceof ClientResponseError) {
                 console.log(error.data.data);
@@ -202,7 +207,6 @@ function newPocketBase() {
             try {
                 return await createUser(collection, data);
             } catch (error) {
-                console.log('ClientResponseError');
                 throw error; // Rethrow the error to be handled by the caller
             }
         },
@@ -254,6 +258,23 @@ function newPocketBase() {
         },
         deleteByName(name: string, collection: string) {
             return deleteByField('name', name, collection);
+        },
+        deleteUser(user: User) {
+            return deleteUser(user);
+        },
+        addUsersFromFile(data: FormData) {
+            return pb.collection('files').update('lastUploadedCSV', data);
+        },
+        async getFirstListItem(collection: string, filter: string, options?: RecordListOptions) {
+            try {
+                const record = await pb.collection(collection).getFirstListItem(filter, options);
+                return mapUser(record);
+            } catch (error) {
+                if (error instanceof ClientResponseError) {
+                    throw new userNotFoundError(`No se encontró el usuario.`);
+                }
+                return null;
+            }
         }
 
     };
@@ -262,18 +283,3 @@ function newPocketBase() {
 export const pb = newPocketBase();
 
 
-export function createUser(initial: AuthModel) {
-    let user = $state(initial!);
-    return {
-        ...initial,
-        get username() {
-            return user.username;
-        },
-        get email() {
-            return user.email;
-        },
-        get role() {
-            return user.collectionName;
-        }
-    }
-}

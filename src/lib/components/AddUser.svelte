@@ -98,12 +98,14 @@
 		<!-- svelte-ignore a11y_no_redundant_roles -->
 		<label
 			>Contraseña
+			<!-- svelte-ignore a11y_no_redundant_roles -->
 			<fieldset role="group">
 				<input
 					type={showPassword ? 'text' : 'password'}
 					bind:value={password}
 					id="password"
 					name="password"
+					aria-invalid={password.length <= 8 ? undefined : password.length < 32 ? false : true}
 					required
 				/>
 				<button type="button" onclick={() => (showPassword = !showPassword)}>
