@@ -1,11 +1,20 @@
 <script lang="ts">
 	import { formatDate } from '$lib/utils';
-
-	interface Props {
-		data: any;
-	}
-
-	let { data }: Props = $props();
+	import type { SvelteComponent } from 'svelte';
+	type ContentComponent = typeof SvelteComponent;
+	let {
+		data
+	}: {
+		data: {
+			content: ContentComponent;
+			meta: {
+				title: string;
+				description: string;
+				date: string;
+				categories: string[];
+			};
+		};
+	} = $props();
 </script>
 
 <!-- SEO -->
@@ -31,9 +40,9 @@
 	</div>
 
 	<!-- Post -->
-	<div class="prose">
-		<svelte:component this={data.content} />
-	</div>
+	{#if data.content}
+		<data.content />
+	{/if}
 </article>
 
 <style>

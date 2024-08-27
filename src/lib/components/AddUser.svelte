@@ -3,10 +3,8 @@
 	import type { MouseEventHandler } from 'svelte/elements';
 	import {
 		pb,
-		type User,
 		invalidEmailError,
 		invalidCollectionNameError,
-		invalidNameError,
 		invalidPasswordError,
 		invalidUsernameError
 	} from '$lib/pb/pocketbase.svelte';
@@ -20,14 +18,28 @@
 	let showPassword = $state(false);
 	let status = $state('');
 	let success = $state(false);
-	$inspect(status);
+
+	let passwordError = $state('');
+
+	function validatePassword(password: string): boolean {
+		const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,32}$/;
+		return regex.test(password);
+	}
+
+	function handlePasswordInput(event: Event) {
+		password = (event.target as HTMLInputElement).value;
+		if (!validatePassword(password)) {
+			passwordError =
+				'La contraseña debe tener entre 8 y 32 caracteres, incluir al menos un número, una letra mayúscula y unos de los siguientes simbolos: (!@#$%^&*).';
+		} else {
+			passwordError = '';
+		}
+	}
 
 	async function handleAddUser(e: SubmitEvent) {
 		e.preventDefault();
-		let user: User | null = null;
-
 		try {
-			user = await pb.createUserFromFields(name, username, email, password, role);
+			await pb.createUserFromFields(name, username, email, password, role);
 			status = 'Usuario añadido correctamente.';
 			success = true;
 		} catch (error) {
@@ -52,7 +64,7 @@
 	<header class="flex justify-between">
 		<h3>Añadir a un nuevo usuario</h3>
 
-		<button aria-label="Close" class="secondary" {onclick}
+		<button aria-label="Close" class="contrast" {onclick}
 			>{#if onclick}<X class="w-6 h-6" />{/if}</button
 		>
 	</header>
@@ -89,15 +101,19 @@
 				>Rol
 				<select id="role" name="role" bind:value={role} required>
 					<option selected disabled value="">Seleccionar</option>
-					<option value="students">Alumna/o</option>
-					<option value="teachers">Maestra/o</option>
-					<option value="supervisors">Supervisor(a)</option>
+					<option value="students">Estudiante</option>
+					{#if pb.loggedUser!.collectionName === 'supervisors'}
+						<option value="collaborators">Colaborador</option>
+					{/if}
+					{#if pb.loggedUser!.collectionName === 'supervisors'}
+						<option value="supervisors">Administrador</option>
+					{/if}
 				</select>
 			</label>
 		</div>
 		<!-- svelte-ignore a11y_no_redundant_roles -->
-		<label
-			>Contraseña
+		<label>
+			Contraseña
 			<!-- svelte-ignore a11y_no_redundant_roles -->
 			<fieldset role="group">
 				<input
@@ -105,8 +121,9 @@
 					bind:value={password}
 					id="password"
 					name="password"
-					aria-invalid={password.length <= 8 ? undefined : password.length < 32 ? false : true}
+					aria-invalid={passwordError ? true : false}
 					required
+					oninput={handlePasswordInput}
 				/>
 				<button type="button" onclick={() => (showPassword = !showPassword)}>
 					{#if showPassword}
@@ -116,6 +133,9 @@
 					{/if}
 				</button>
 			</fieldset>
+			{#if passwordError}
+				<p style="color: red;">{passwordError}</p>
+			{/if}
 		</label>
 
 		<button type="submit">Añadir</button>
@@ -125,7 +145,6 @@
 <style>
 	header button {
 		padding: 0.5rem;
-		background-color: transparent;
 		border: none;
 	}
 

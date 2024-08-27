@@ -1,12 +1,9 @@
 <script lang="ts">
 	import { formatDate } from '$lib/utils';
 	import * as config from '$lib/config';
+	import type { Post } from '$lib/types';
 
-	interface Props {
-		data: any;
-	}
-
-	let { data }: Props = $props();
+	let { data }: { data: { posts: Post[] } } = $props();
 </script>
 
 <svelte:head>
@@ -14,7 +11,7 @@
 </svelte:head>
 
 <!-- Posts -->
-<section>
+<section class="pico container">
 	<ul class="posts">
 		{#each data.posts as post}
 			<li class="post">

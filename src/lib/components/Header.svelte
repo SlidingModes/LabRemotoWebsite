@@ -6,7 +6,6 @@
 	import { Menu } from 'lucide-svelte';
 	import { slide } from 'svelte/transition';
 
-	let { loggedIn }: { loggedIn: boolean } = $props();
 	let openDrawer = $state(false);
 </script>
 
@@ -17,6 +16,7 @@
 			<a href="/"><b>Inicio</b></a>
 			<a href="/practicas"><b>Prácticas</b></a>
 			<a href="/admin"><b>Administrar</b></a>
+			<a href="/posts"><b>Avisos</b></a>
 		</li>
 	</ul>
 {/snippet}
@@ -24,7 +24,7 @@
 <header class="pico container">
 	<nav>
 		<ul>
-			<li><LogInButton {loggedIn} /></li>
+			<li><LogInButton /></li>
 		</ul>
 		<!-- Title -->
 		<ul>
@@ -43,13 +43,11 @@
 
 		<ul>
 			<li></li>
-			<li>
-				<div role="group">
-					<DarkModeButton />
-					<button class="secondary" onclick={() => (openDrawer = !openDrawer)}>
-						<Menu class="w-5 h-5" />
-					</button>
-				</div>
+			<li class="rightButtons">
+				<DarkModeButton />
+				<button class="secondary" onclick={() => (openDrawer = !openDrawer)}>
+					<Menu class="w-5 h-5" />
+				</button>
 			</li>
 		</ul>
 	</nav>
@@ -63,3 +61,9 @@
 		</nav>
 	{/if}
 </header>
+
+<style>
+	.rightButtons {
+		display: flex;
+	}
+</style>

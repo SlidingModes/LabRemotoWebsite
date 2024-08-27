@@ -1,16 +1,14 @@
 <script lang="ts">
-	import { goto, invalidate, invalidateAll } from '$app/navigation';
 	import { pb } from '$lib/pb/pocketbase.svelte';
 	import { LogIn, LogOut } from 'lucide-svelte';
 
-	let { loggedIn }: { loggedIn: boolean } = $props();
 	async function logOut() {
 		pb.logout();
 		window.location.href = '/';
 	}
 </script>
 
-{#if loggedIn}
+{#if pb.isLoggedIn()}
 	<button class="inline-flex items-center" onclick={logOut}>
 		<LogOut class="w-4 h-4" />
 		<div class="hidden md:block ms-2">Cerrar sesión</div>

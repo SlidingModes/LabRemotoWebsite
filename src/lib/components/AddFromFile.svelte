@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { X, Eye, EyeOff, Info } from 'lucide-svelte';
+	import { X, Info } from 'lucide-svelte';
 	import type { MouseEventHandler } from 'svelte/elements';
 	import { pb } from '$lib/pb/pocketbase.svelte';
 
@@ -14,7 +14,7 @@
 	let files = $state(null);
 
 	let collectionName = $derived(
-		role === 'students' ? 'Alumna/o' : role === 'teachers' ? 'Maestra/o' : 'Supervisor(a)'
+		role === 'students' ? 'Estudiante' : role === 'collaborators' ? 'Colaborador' : 'Administrador'
 	);
 
 	let handleAddFromFile = async (e: SubmitEvent) => {
@@ -36,11 +36,12 @@
 				status = 'Usuarios añadidos correctamente.';
 				success = true;
 			}
-		} catch (error) {
+		} catch {
 			status = 'Uno o más usuarios no pudieron ser añadidos.';
 		}
 		files = null;
 	};
+	console.log(pb.loggedUser);
 </script>
 
 <svelte:window />
@@ -48,8 +49,8 @@
 	<header class="flex justify-between">
 		<h3>Añadir desde archivo CSV/XLSX a {collectionName}</h3>
 
-		<button aria-label="Close" class="secondary" {onclick}
-			>{#if onclick}<X class="w-6 h-6" />{/if}</button
+		<button aria-label="Close" class="contrast" {onclick}
+			>{#if onclick}<X class="w-6 h-6 " />{/if}</button
 		>
 	</header>
 	<p>
@@ -75,9 +76,13 @@
 			>Rol
 			<select id="role" name="role" bind:value={role} required>
 				<option selected disabled value="">Seleccionar</option>
-				<option value="students">Alumna/o</option>
-				<option value="teachers">Maestra/o</option>
-				<option value="supervisors">Supervisor(a)</option>
+				<option value="students">Estudiante</option>
+				{#if pb.loggedUser!.collectionName === 'supervisors' || pb.loggedUser!.collectionName === 'collaborators'}
+					<option value="collaborators">Colaborador</option>
+				{/if}
+				{#if pb.loggedUser!.collectionName === 'supervisors'}
+					<option value="supervisors">Administrador</option>
+				{/if}
 			</select>
 		</label>
 		<input
@@ -94,7 +99,6 @@
 <style>
 	header button {
 		padding: 0.5rem;
-		background-color: transparent;
 		border: none;
 	}
 

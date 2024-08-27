@@ -47,9 +47,9 @@
 					Rol
 					<select bind:value={role} aria-label="Rol" required>
 						<option selected disabled value=""> Soy ... </option>
-						<option value="students">Alumna/o</option>
-						<option value="teachers">Maestra/o</option>
-						<option value="supervisors">Supervisor(a)</option>
+						<option value="students">Estudiante</option>
+						<option value="collaborators">Colaborador</option>
+						<option value="supervisors">Administrador</option>
 					</select>
 				</label>
 				<label>

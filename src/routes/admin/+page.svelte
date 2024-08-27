@@ -8,8 +8,6 @@
 	import LoginRequiredModal from '$lib/components/LoginRequiredModal.svelte';
 	import UnauthorizedModal from '$lib/components/UnauthorizedModal.svelte';
 
-	let { data } = $props();
-
 	let loading = $state(true);
 	let dataFromPB: User[] = $state([]);
 	let role = $state('students');
@@ -31,7 +29,7 @@
 						)
 					);
 					return user;
-				} catch (error) {
+				} catch {
 					return [];
 				}
 			} else {
@@ -49,7 +47,7 @@
 		}
 	}
 
-	async function fillTable(fun: Function) {
+	async function fillTable(fun: () => Promise<User[] | null>) {
 		const data = await fun();
 		if (data) {
 			dataFromPB = data;
@@ -94,13 +92,15 @@
 </div>
 
 <div class="pico container">
-	<div class="text-right">
+	<div class="text-center">
 		<div class="inline-block">
 			<select bind:value={role} aria-label="Rol" required>
 				<option selected disabled value="Usuario">Ver</option>
-				<option value="students">Alumna/o</option>
-				<option value="teachers">Maestra/o</option>
-				<option value="supervisors">Supervisor(a)</option>
+				<option value="students">Estudiante</option>
+				{#if pb.isRole('supervisors')}
+					<option value="collaborators">Colaborador</option>
+					<option value="supervisors">Administrador</option>
+				{/if}
 			</select>
 		</div>
 		<button

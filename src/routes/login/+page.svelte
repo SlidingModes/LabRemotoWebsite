@@ -1,35 +1,25 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { pb } from '$lib/pb/pocketbase.svelte';
 	import { Eye, EyeOff } from 'lucide-svelte';
 
-	let { data } = $props();
-
-	let user = data.user;
 	let showPassword = $state(false);
 
 	$effect.pre(() => {
-		/* 		if (pb.isLoggedIn()) {
+		if (pb.isLoggedIn()) {
 			location.href = '/';
-		} */
-		if (user) {
-			goto('/');
 		}
 	});
 
 	async function handleLogin() {
 		try {
-			const authData = await pb.login(username, password, role);
+			await pb.login(username, password, role);
 			logInStatus = 'success';
-			const user = pb.loggedUser;
 
 			if (pb.authStoreIsValid()) {
 				location.href = '/';
 			}
-		} catch (error) {
-			console.error('Error during login:', error);
+		} catch {
 			logInStatus = 'error';
-			// Manejar el error adecuadamente aquí
 		}
 	}
 
@@ -45,8 +35,8 @@
 		<dialog {open}>
 			<article>
 				<h2>¡Ups!</h2>
-				<p>Error al conectar con el servidor</p>
-				<p>Si no puedes iniciar sesión, prueba desactivando tu AdBlocker.</p>
+				<p>Parece que los datos no son correctos</p>
+				<p>Si no puedes iniciar sesión, prueba reestableciendo tu contraseña.</p>
 				<footer>
 					<button onclick={() => (location.href = '/login')}>Iniciar sesión</button>
 				</footer>
@@ -97,9 +87,9 @@
 					Rol
 					<select bind:value={role} aria-label="Rol" required>
 						<option selected disabled value=""> Soy ... </option>
-						<option value="students">Alumna/o</option>
-						<option value="teachers">Maestra/o</option>
-						<option value="supervisors">Supervisor(a)</option>
+						<option value="students">Estudiante</option>
+						<option value="collaborators">Colaborador</option>
+						<option value="supervisors">Administrador</option>
 					</select>
 				</label>
 			</fieldset>

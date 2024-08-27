@@ -8,12 +8,13 @@ categories:
   - svelte
 published: true
 ---
+
 ## Markdown
 
 Hey friends! 👋
 
 ```typescript
 function greet(name: string) {
-	console.log(`Hey ${name}! 👋`)
+	console.log(`Hey ${name}! 👋`);
 }
 ```
