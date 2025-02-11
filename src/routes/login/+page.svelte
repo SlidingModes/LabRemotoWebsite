@@ -45,14 +45,20 @@
 	</div>
 {/if}
 
-<div class="container max-w-xl pico">
+<div class="container max-w-xl pico elemento">
+
 	<article class="container">
+
 		<header class="text-center"><b>Iniciar sesión</b></header>
-		<form class="container">
-			<fieldset class="grid">
-				<label>
-					Usuario
+
+			<form class="container">
+
+				<div class="grid" >
+
+					<label for="User"> Usuario 
+					
 					<input
+						type = "text"
 						name="username"
 						placeholder="leonardita"
 						autocomplete="username"
@@ -60,50 +66,66 @@
 						bind:value={username}
 						required
 					/>
-				</label>
-				<label
-					>Contraseña
-					<!-- svelte-ignore a11y_no_redundant_roles -->
-					<fieldset role="group">
-						<input
-							type={showPassword ? 'text' : 'password'}
-							bind:value={password}
-							id="password"
-							name="password"
-							autocomplete="current-password"
-							aria-invalid={password.length <= 8 ? undefined : password.length < 32 ? false : true}
-							required
-						/>
-						<button type="button" onclick={() => (showPassword = !showPassword)}>
-							{#if showPassword}
-								<EyeOff />
-							{:else}
-								<Eye />
-							{/if}
-						</button>
-					</fieldset>
-				</label>
-				<label>
-					Rol
-					<select bind:value={role} aria-label="Rol" required>
-						<option selected disabled value=""> Soy ... </option>
-						<option value="students">Estudiante</option>
-						<option value="collaborators">Colaborador</option>
-						<option value="supervisors">Administrador</option>
-					</select>
-				</label>
-			</fieldset>
+					
+					</label>
+				
+				</div>
+				<div class="grid" >
 
-			<div class="text-center my-auto">
-				<input
-					class="max-w-60"
-					type="button"
-					disabled={username === '' || password === '' || role === ''}
-					value="Iniciar sesión"
-					onclick={handleLogin}
-				/>
-			</div>
-		</form>
+					<label>
+						Contraseña
+						<!-- svelte-ignore a11y_no_redundant_roles -->
+						<fieldset role="group">
+
+							<input
+								type={showPassword ? 'text' : 'password'}
+								bind:value={password}
+								id="password"
+								name="password"
+								autocomplete="current-password"
+								aria-invalid={password.length <= 8 ? undefined : password.length < 32 ? false : true}
+								required
+							/>
+							
+							<button type="button" onclick={() => (showPassword = !showPassword)}>
+								{#if showPassword}
+									<EyeOff />
+								{:else}
+									<Eye />
+								{/if}
+							</button>
+
+						</fieldset>
+
+					</label>
+				
+				</div>
+				<div class="grid" >
+					
+					<label>
+						Rol
+						<select bind:value={role} aria-label="Rol" required>
+							<option selected disabled value=""> Soy ... </option>
+							<option value="students">Estudiante</option>
+							<option value="collaborators">Colaborador</option>
+							<option value="supervisors">Administrador</option>
+						</select>
+					</label>
+
+				</div>
+
+				<div class="text-center my-auto">
+					<input
+						class="max-w-60"
+						type="button"
+						disabled={username === '' || password === '' || role === ''}
+						value="Iniciar sesión"
+						onclick={handleLogin}
+					/>
+				</div>
+
+			</form>
+
 		<footer class="flex justify-between items-center">
 			<small>
 				¿Olvidaste tu contraseña? <a href="/login/password-reset">Recuperar </a>
@@ -121,5 +143,11 @@
 	}
 	footer {
 		margin-top: 0;
+	}
+	.elemento {
+		width: 30% ;
+		height: auto;
+		margin: 0 auto;
+		display: block;
 	}
 </style>

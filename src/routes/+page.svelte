@@ -79,9 +79,11 @@
             </figure-->
 			
 			<figure>
+
 				<img
-				  src="https://i.postimg.cc/Vk5DV8Bm/home.jpg"
-				  alt="Laboratorio Remoto"
+                    width="700"
+				    src="https://i.postimg.cc/4NymtZ9T/home-02.jpg"
+				    alt="Laboratorio Remoto"
 				/>
 				<figcaption>
 				  Sistema de Frenos ABS - INTECO

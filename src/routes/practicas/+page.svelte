@@ -171,9 +171,48 @@
 					<h3>Bienvenida/o</h3>
 					<p>Tendrás 30 minutos a partir de {horarioReservado.horario.toLocaleString('es-MX')}</p>
 					<!-- Links a diferentes prácticas -->
-					<h4 class="text-center"><a href="/practicas/lab">Entrar</a></h4>
-					<h4 class="text-center"><a href="/practicas/practica_base">Práctica Base</a></h4> <!-- Acceso a práctica Base de ejemplo -->
-					<h4 class="text-center"><a href="/practicas/practica_01">Práctica 01</a></h4>
+
+					<section >
+
+						<header>
+							<hr />
+							<h5>Selecciona una opción:</h5>
+							<p></p>
+						</header>
+
+						<div role = "group" class="posicion" >
+
+							<a href="/practicas/lab">
+								<button>
+									Entrar
+								</button>
+							</a>
+							
+							<a href="/practicas/practica_base">
+								<button>
+									Práctica Base
+								</button>
+							</a>
+							
+							<a href="/practicas/practica_01">
+								<button>
+									Práctica 01
+								</button>
+							</a>
+
+						</div>
+
+						<footer>
+							<hr />
+						</footer>
+
+					</section>
+
+					<!--h4 class="text-center"><a href="/practicas/lab">Entrar</a></h4>
+					<h4 class="text-center"><a href="/practicas/practica_base">Práctica Base</a></h4> <-- Acceso a práctica Base de ejemplo ->
+					<h4 class="text-center"><a href="/practicas/practica_01">Práctica 01</a></h4-->
+
+
 					<p>Es posible que debas desactivar tu AdBlocker</p>
 				{:else}
 					<div class="grid">
@@ -275,3 +314,14 @@
 		</div>
 	</article>
 </div>
+
+<style>
+
+	.posicion {
+		width:100% ;
+		height: auto;
+		margin: 0 auto;
+		display: center;
+	}
+
+</style>
