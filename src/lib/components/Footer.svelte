@@ -4,6 +4,7 @@
 
 <!-- Footer -->
 <footer class="pico container text-center">
+	
 	<hr />
 	<p>
 		{config.title} - Análisis de Sistemas y Señales &copy <a href="https://www.ingenieria.unam.mx/">FI - UNAM </a>  {new Date().getFullYear()}

@@ -13,53 +13,47 @@
 
 {#snippet navLinks()}
   
-	<!-- Bloque reutilizable para generar los enlaces de navegación. -->
+	<form role="group">		 
+		<fieldset dir="rtl" >
 
-	<ul >
-		<li  >	  
-			<!-- Cada enlace incluye un botón estilizado y texto solo visible en pantallas medianas. -->
-			<a href="/" class="flex justify-center items-center">
-				<button class="flex justify-center items-center">
-					<div class="hidden md:block ms-2">Inicio</div>
+			<a href="/posts">
+				<button class="secondary">
+						Avisos 
 				</button>
 			</a>
-			
-			<a href="/practicas" class="inline-flex items-center">
-				<button class="inline-flex items-center">
-					<div class="hidden md:block ms-2">Prácticas</div>
+
+			<a href="/admin">
+				<button class="secondary">
+					Administrar
 				</button>
 			</a>
-			<a href="/admin" class="inline-flex items-center">
-				<button class="inline-flex items-center">
-					<div class="hidden md:block ms-2">Administrar</div>
+
+			<a href="/practicas" >
+				<button class="secondary">
+						Prácticas  
 				</button>
 			</a>
-			<a href="/posts" class="inline-flex items-center">
-				<button class="inline-flex items-center">
-					<div class="hidden md:block ms-2">Avisos</div>
+
+			<a href="/" >
+				<button class="secondary">
+							Inicio    
 				</button>
-			</a>	
-		</li>
-	</ul>
+			</a>
+
+		</fieldset>
+	</form>	
+	
 
 {/snippet}
 
 <header class="pico container">
 	<nav>
 
-		<!-- Botones de la derecha: modo oscuro y menú desplegable. -->
+		<!-- Botón de inicio de sesión. -->
 		<ul>
-			<li class="rightButtons">
-				
-				<button class="secondary" onclick={() => (openDrawer = !openDrawer)}>
-					<Menu class="w-5 h-5" /> <!-- Ícono del menú. -->
-				</button>
+			<li><LogInButton /></li>
+		</ul>
 
-				<p>&nbsp; </p>
-
-				<DarkModeButton /> <!-- Botón de modo oscuro. -->
-			</li>
-		</ul>		
 
 		<!-- Enlace al inicio con avatar y título dinámico -->
 		<ul>
@@ -84,10 +78,22 @@
 		</ul>
 
 		
-		<!-- Botón de inicio de sesión. -->
+		
+		<!-- Botones de la derecha: modo oscuro y menú desplegable. -->
 		<ul>
-			<li><LogInButton /></li>
-		</ul>
+			<li class="rightButtons">
+				
+				<button class="secondary" onclick={() => (openDrawer = !openDrawer)}>
+					<summary>
+						<Menu class="w-5 h-5" /> <!-- Ícono del menú. --> Menú
+					</summary>
+				</button>
+
+				<p>&nbsp; </p>
+				
+				<DarkModeButton /> <!-- Botón de modo oscuro. -->
+			</li>
+		</ul>	
 		
 
 	</nav>
@@ -107,5 +113,7 @@
 	.rightButtons {
 		display: flex;
 	}
+
+
 	
 </style>
