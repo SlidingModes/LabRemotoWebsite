@@ -16,22 +16,37 @@
 				</hgroup>
 				{#if !loggedIn}
 					<p>Inicia sesión para ingresar a las prácticas.</p>
+
+					<!-- Iniciar Sesión -->
 					<a href="/login" class="inline-flex items-center">
-						Inicia sesión
-						<LogIn class="w-4 h-4 ms-2" />
+						<button class="inline-flex items-center">
+							<div class="hidden md:block ms-2">Inicia sesión <LogIn class="w-4 h-4 ms-2" /> </div>
+						</button>
 					</a>
+
 				{:else if !pb.isRole('students')}
 					<p></p>
 					<p>Accede al panel de administrador para modificar a los usuarios</p>
 					<p>O revisa la página de prácticas</p>
 
 					<div class="text-center items-center">
-						<a href="/practicas" class="secondary no-underline rounded-lg text-sm px-4 py-2"
-							>Prácticas</a
-						>
-						<a href="/admin" class="button no-underline rounded-lg text-sm px-4 py-2">Admin Panel</a
-						>
+
+						<!-- Botón de Prácticas -->
+						<a href="/practicas" class="secondary no-underline rounded-lg text-sm px-4 py-2">
+							<button class="inline-flex items-center">
+								<div class="hidden md:block ms-2">Prácticas</div>
+							</button>
+						</a>
+
+						<!-- Botón Admin Panel -->
+						<a href="/admin" class="button no-underline rounded-lg text-sm px-4 py-2">
+							<button class="inline-flex items-center">
+								<div class="hidden md:block ms-2">Admin Panel</div>
+							</button>
+						</a>
+					
 					</div>
+
 				{:else}
 					<p>Puedes reservar un horario o, si ya tienes uno, ingresar a la práctica.</p>
 
