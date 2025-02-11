@@ -6,7 +6,7 @@ Este código implementa un encabezado para una página web utilizando Svelte y T
 <script lang="ts">
 	// Importa configuraciones globales, componentes y librerías necesarias.
 	import * as config from '$lib/config'; // Configuración global (por ejemplo, el título).
-	import DarkModeButton from './DarkModeButton.svelte'; // Componente de modo oscuro.
+	//import DarkModeButton from './DarkmodeButton.svelte'; // Componente de modo oscuro.
 	import { Avatar } from 'bits-ui'; // Componente de avatar.
 	import LogInButton from './LogInButton.svelte'; // Botón de inicio de sesión.
 	import { Menu } from 'lucide-svelte'; // Ícono del menú de navegación.
@@ -56,26 +56,27 @@ Este código implementa un encabezado para una página web utilizando Svelte y T
 			<li><LogInButton /></li>
 		</ul>
 
-		<!-- Enlace al inicio con avatar y título dinámico. -->
+		<!-- Enlace al inicio con avatar y título dinámico -->
 		<ul>
 			<li>
-				<a href="/" class="contrast inline-flex items-center">
-					<div class="flex items-center">
-						<Avatar.Root class="h-6 w-6 secondary mr-2">
-							<Avatar.Image src="/icon.png" alt="Escudo Facultad de Ingeniería" />
-							<Avatar.Fallback />
-						</Avatar.Root>
-						<b>{config.title}</b>
-					</div>
-				</a>
+			<a href="/" class="contrast inline-flex items-center">
+				<div class="flex items-center">
+				<Avatar.Root class="h-[50px] w-[50px] secondary mr-2">
+					<Avatar.Image src="/icon.png" alt="Escudo Facultad de Ingeniería UNAM" />
+					<Avatar.Fallback />
+				</Avatar.Root>
+				<b>{config.title}</b>
+				</div>
+			</a>
 			</li>
 		</ul>
+  
 
 		<!-- Botones de la derecha: modo oscuro y menú desplegable. -->
 		<ul>
 			<li></li>
 			<li class="rightButtons">
-				<DarkModeButton /> <!-- Botón de modo oscuro. -->
+				<!--DarkModeButton /--> <!-- Botón de modo oscuro. -->
 				<button class="secondary" onclick={() => (openDrawer = !openDrawer)}>
 					<Menu class="w-5 h-5" /> <!-- Ícono del menú. -->
 				</button>
