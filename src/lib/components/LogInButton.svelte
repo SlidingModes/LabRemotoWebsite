@@ -9,14 +9,14 @@
 </script>
 
 {#if pb.isLoggedIn()}
-	<button class="inline-flex items-center" onclick={logOut}>
-		<LogOut class="w-4 h-4" />
+	<button class="inline-flex items-center" onclick={logOut} >
+		<!--LogOut class="w-5 h-5" /-->
 		<div class="hidden md:block ms-2">Cerrar sesión</div>
 	</button>
 {:else}
 	<a href="/login" class="button">
 		<LogIn class="w-4 h-4" />
-		<div class="hidden md:block ms-2">Inicia sesión</div>
+		<div class="hidden md:block ms-2"> &nbsp; Inicia sesión</div>
 	</a>
 {/if}
 
