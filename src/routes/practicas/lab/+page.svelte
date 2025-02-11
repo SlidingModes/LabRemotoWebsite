@@ -7,13 +7,16 @@
 
 	let params = $state<number[]>([]);
 	let p = $state(0);
+	let q = $state(0);
 
 	async function handleSubmit(e: SubmitEvent) {
 		e.preventDefault();
 
 		params.push(p);
+		params.push(q);
 		const formData = new URLSearchParams();
 		formData.append('params', p);
+		formData.append('params', q);
 		params = [];
 
 		try {
@@ -75,6 +78,10 @@
 				<label>
 					Valor para p
 					<input type="number" bind:value={p} min="0" max="10" />
+				</label>
+				<label>
+					Valor para q
+					<input type="number" bind:value={q} min="20" max="100" />
 				</label>
 				<button type="submit">Enviar</button>
 			</form>
