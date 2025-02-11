@@ -62,7 +62,7 @@ Este código implementa un encabezado para una página web utilizando Svelte y T
 			<a href="/" class="contrast inline-flex items-center">
 				<div class="flex items-center">
 				<Avatar.Root class="h-[50px] w-[50px] secondary mr-2">
-					<Avatar.Image src="/icon.png" alt="Escudo Facultad de Ingeniería" />
+					<Avatar.Image src="/icon.png" alt="Escudo Facultad de Ingeniería UNAM" />
 					<Avatar.Fallback />
 				</Avatar.Root>
 				<b>{config.title}</b>
