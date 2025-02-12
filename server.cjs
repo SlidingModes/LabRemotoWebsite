@@ -1,4 +1,5 @@
 const express = require("express");
+
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -7,16 +8,27 @@ const app = express();
 const port = 3000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin:'http://localhost:5173',
+})); 
+
 app.use(bodyParser.json());
 
 // Conexión a MySQL
+const corsOptions={
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
+};
+
+app.use(cors(corsOptions));
+
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root", 
   password: "", 
   database: "server_labconnect", 
-});
+}); 
 
 connection.connect((err) => {
   if (err) {

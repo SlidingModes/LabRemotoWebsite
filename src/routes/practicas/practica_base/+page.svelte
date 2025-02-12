@@ -51,7 +51,7 @@
 
         try {
             // send to data to server 
-            const responseEntrada = await fetch("http://loccalhost:3000/guardar-entrada", {
+            const responseEntrada = await fetch("http://localhost:3000/guardar-entrada", {
                 method: "POST",
                 headers:{
                     "Content-Type":"application/json",
@@ -66,7 +66,8 @@
             });
 
             if(!responseEntrada.ok){
-                throw new Error("Error al enviar los datos dde entrada");
+                console.error('Error al enviar los datos: ', responseEntrada );
+                throw new Error("Error al enviar los datos de entrada");
             }
 
             
