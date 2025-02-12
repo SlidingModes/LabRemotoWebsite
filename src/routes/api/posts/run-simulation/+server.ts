@@ -1,4 +1,5 @@
 // Importa la función `json` de SvelteKit para devolver respuestas JSON
+// src/routes/api/posts/run-simulation/+server.ts
 import { json } from '@sveltejs/kit';
 import type { RequestEvent } from '@sveltejs/kit';
 import mysql, { type Pool } from 'mysql2/promise';

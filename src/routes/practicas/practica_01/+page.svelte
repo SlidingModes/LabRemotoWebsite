@@ -27,8 +27,8 @@
 
 		// Prepara los datos en formato codificado para enviarlos al servidor
 		const formData = new URLSearchParams();
-		formData.append('params', p); // Agrega el valor de p
-		formData.append('params', q); // Agrega el valor de q
+		//formData.append('params', p); // Agrega el valor de p
+		//formData.append('params', q); // Agrega el valor de q
 		params = []; // Limpia el arreglo de parámetros después de preparar los datos
 
 		try {
@@ -82,8 +82,9 @@
 <div class="pico container">
 
 	<article>
+
 		<header>
-			<h1 align="center">Nombre de la Práctica 01</h1> <!-- Título de la página -->
+			<h1>Nombre de la Práctica 01</h1> <!-- Título de la página -->
 		</header>
 
 		<div class="grid">
@@ -111,5 +112,18 @@
 
 		</div>
 
+		<footer>
+			<hr />
+		</footer>
+
 	</article>
 </div>
+
+<style>
+	.sizeLC {
+		width: 300 px;
+		height: auto;
+		margin: 0 auto;
+		display: right;
+	}
+</style>

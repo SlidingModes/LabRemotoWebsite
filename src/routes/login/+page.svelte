@@ -101,7 +101,7 @@
 				
 				</div>
 				<div class="grid" >
-					
+
 					<label>
 						Rol
 						<select bind:value={role} aria-label="Rol" required>
@@ -134,7 +134,9 @@
 				<a href="/admin" class="no-underline">Admin</a>
 			</small>
 		</footer>
+
 	</article>
+	
 </div>
 
 <style>
