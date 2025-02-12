@@ -12,8 +12,18 @@
 
     // Declara las variables para los datos del formulario
     let amplitudOnda = $state(0); // Nueva variable para la amplitud de onda
-    
-
+    // Nueva variable para la amplitud de onda 
+    let fechaPractica = new Date().toISOString().split('T')[0]; 
+    // Asignar la fecha actual 
+    let usuarioActivo = 'usuarioEjemplo'; 
+    // Cambiar por el nombre de usuario autenticado 
+    let numeroPractica = 1; 
+    // Número de práctica (puedes obtener este dato dinámicamente) 
+    let estadoPractica = 'start'; 
+    // Estado de la práctica 
+    let notas = 'Iniciando el experimento'; 
+    // Notas adicionales para el registro 
+    // Bloqueo del botón después de ser presionado 
     function bloquearButton(){
         // Bloquea el botón
         var buttonSend = document.getElementById('enviarBtn') as HTMLButtonElement;
@@ -21,48 +31,93 @@
         buttonSend.innerHTML = "Enviado"; 
     }
 
-    // Función asíncrona para manejar el envío del formulario
-    async function handleSubmit(e: SubmitEvent) {
-        // Evita que la página se recargue al enviar el formulario
-        e.preventDefault();
 
-        // Prepara los datos en formato codificado para enviarlos al servidor
-        const formData = new URLSearchParams();
-        formData.append('amplitudOnda', String(amplitudOnda)); // Agrega la amplitud de onda
+    // ------------------------------------------------------------
+    const formData = { 
+            ampl: amplitudOnda, 
+            fecha_practica: fechaPractica, 
+            usuario_activo: usuarioActivo, 
+            numero_practica: numeroPractica, 
+            estado_practica: estadoPractica, 
+            notas: notas 
+    };
+
+    const enviarDatos = async () => {
+
+        if(!amplitudOnda){
+            alert("Por favor, ingresa un valor.");
+            return;
+        }
 
         try {
-            // Envía una solicitud POST al servidor con los parámetros
-            const response = await fetch(url + '/api/submit_data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+            // send to data to server 
+            const responseEntrada = await fetch("http://loccalhost:3000/guardar-entrada", {
+                method: "POST",
+                headers:{
+                    "Content-Type":"application/json",
                 },
-                body: formData // Los datos a enviar
+                body: JSON.stringify({ 
+                    ampl:formData.ampl, 
+                    fecha_practica:formData.fecha_practica,
+                    usuario_activo:formData.usuario_activo,
+                    numero_practica:formData.numero_practica,
+                    estado_practica:formData.estado_practica,
+                    notas:formData.notas }),
             });
 
-            if (response.ok) {
-                // Convierte la respuesta en un Blob para manipular archivos binarios
-                const blob = await response.blob();
-                const url = URL.createObjectURL(blob);
-
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'data.mat'; // Especifica el nombre del archivo descargado
-                document.body.appendChild(a); // Añade el enlace al DOM
-                a.click(); // Simula el clic para iniciar la descarga
-
-                // Limpia el enlace y revoca la URL temporal
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-
-                console.log('Archivo descargado con éxito.');
-            } else {
-                console.error('Error en la respuesta:', response.statusText);
+            if(!responseEntrada.ok){
+                throw new Error("Error al enviar los datos dde entrada");
             }
-        } catch (error) {
-            console.error('Error en la solicitud:', error);
+
+            
+
+        } catch (error){
+            console.error("Error:", error);
+            alert("Hubo un error al enviar los datos al servidor");
         }
+
     }
+    // ------------------------------------------------------------
+    /*
+
+    // Función asíncrona para manejar el envío del formulario 
+    async function handleSubmit(e: SubmitEvent) { 
+        e.preventDefault(); // Evitar que el formulario se recargue
+        
+        // Preparar los datos para enviar al servidor 
+        const formData = { 
+            ampl: amplitudOnda, 
+            fecha_practica: fechaPractica, 
+            usuario_activo: usuarioActivo, 
+            numero_practica: numeroPractica, 
+            estado_practica: estadoPractica, 
+            notas: notas 
+        };
+        
+        try { 
+            // Enviar una solicitud POST al servidor con los parámetros 
+            const response = await fetch(url + '/api/run-simulation', { 
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json', 
+                }, 
+                body: JSON.stringify(formData) // Convertir los datos en formato JSON
+            });
+            
+            if (response.ok) { 
+                const data = await response.json(); 
+                console.log('Práctica registrada correctamente:', data); 
+                alert('Práctica registrada correctamente con ID: ' + data.idPractica); // Mensaje de éxito 
+                bloquearButton(); // Bloquear el botón después de enviar el formulario 
+            } else { 
+                console.error('Error en la respuesta:', response.statusText); 
+                alert('Hubo un error al registrar la práctica');
+            }
+        } catch (error) { 
+            console.error('Error al enviar la solicitud:', error);
+            alert('Hubo un error en la solicitud'); 
+        }
+    } */
 
 </script>
 
@@ -94,7 +149,7 @@
             </div>
 
             <!-- Formulario para capturar los valores de p, q y la amplitud de onda -->
-            <form onsubmit={handleSubmit}>
+            <form onsubmit={enviarDatos}>
 
                 <!-- Valores entre 0.2 y 0.5 -->
                 <hgroup>
@@ -121,7 +176,7 @@
                 </label>
 
                 <!--button type="submit">Enviar</button-->
-                <button type="submit" id="enviarBtn" onclick={bloquearButton}> Enviar </button>
+                <button type="submit" id="enviarBtn"> Enviar </button>
 
             </form>
 

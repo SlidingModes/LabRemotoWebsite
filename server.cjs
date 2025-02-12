@@ -13,9 +13,9 @@ app.use(bodyParser.json());
 // Conexión a MySQL
 const connection = mysql.createConnection({
   host: "localhost",
-  user: "root", // Cambia esto si usas otro usuario
-  password: "", // Cambia esto por tu contraseña de MySQL
-  database: "server_labconnect", // Nombre de tu base de datos
+  user: "root", 
+  password: "", 
+  database: "server_labconnect", 
 });
 
 connection.connect((err) => {
@@ -27,7 +27,7 @@ connection.connect((err) => {
 });
 
 // Ruta para guardar los datos de entrada de la práctica
-app.post("/api/run-simulation", (req, res) => {
+app.post("/guardar-entrada", (req, res) => {
   const { ampl, fecha_practica, usuario_activo, numero_practica, estado_practica, notas } = req.body;
 
   // Validar que todos los campos requeridos estén presentes
@@ -56,7 +56,7 @@ app.post("/api/run-simulation", (req, res) => {
 });
 
 // Ruta para consultar los resultados de una práctica
-app.get("/api/practice-results/:idPractica", (req, res) => {
+app.get("/consultar-salida/:idPractica", (req, res) => {
   const { idPractica } = req.params;
 
   // Consultar los datos de la práctica en la tabla `practicas`

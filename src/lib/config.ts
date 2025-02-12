@@ -27,9 +27,9 @@ export const url_s = "localhost:3000";
 export const title = 'Laboratorio Remoto';
 export const description = 'Laboratorio Remoto - Análisis de Sistemas y Señales';
 //export const url = dev ? 'http://127.0.0.1:8090' : 'http://132.148.52.21:8090';
-export const url = dev ? 'http://132.248.52.21:8090' : 'http://132.248.52.21:8090';
+export const url = dev ? 'http://132.248.52.21:8090' : 'https://labremotomd.fi-p.unam.mx';
 export const pocketbaseURL = dev ? url : url;
 export const streamURL = dev
 	? 'http://localhost:10000/api/whep'
-	: 'http://132.248.52.21:10000/api/whep';
+	: 'https://labremotomd.fi-p.unam.mx/api/whep';
 export const streamKey = 'RemoteLabStream';
